@@ -1,0 +1,24 @@
+{
+  "name": "openssl-commander",
+  "version": "1.0.0",
+  "description": "OpenSSL wrapper to run any command that OpenSSL admits.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlcs-es/openssl-commander.git"
+  },
+  "keywords": [
+    "openssl",
+    "shell",
+    "wrapper"
+  ],
+  "author": "Jose Luis Canovas Sanchez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jlcs-es/openssl-commander/issues"
+  },
+  "homepage": "https://github.com/jlcs-es/openssl-commander#readme"
+}
