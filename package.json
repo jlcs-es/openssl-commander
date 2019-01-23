@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/jlcs-es/openssl-commander/issues"
   },
-  "homepage": "https://github.com/jlcs-es/openssl-commander#readme"
+  "homepage": "https://github.com/jlcs-es/openssl-commander#readme",
+  "dependencies": {
+    "@types/node": "^10.12.18"
+  }
 }

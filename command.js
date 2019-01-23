@@ -1,50 +1,73 @@
+const { spawnSync } = require('child_process');
 
-export class Command {
+class Command {
     
-    constructor() {}
+    constructor() {
+        this._stdin = "";
+    }
 
     cmd(...params) {
         this._command = "openssl";
-        this._args = params;
+        if(params.length == 1)
+            this._args = params[0].split(" ");
+        else
+            this._args = params;
+        
+        // exec() ONLY EXISTS AFTER cmd() IS CALLED
+        this.exec = function() {
+            let result = spawnSync(this._command, this._args, { input: this._stdin });
+            if(result.error)
+                throw result.error;
+            return new Executed(result);
+        }
+        
+        return this;
     }
     
-    stdin() {
-
+    stdin(input) {
+        this._stdin = input;
+        return this;
     }
-
     
 }
 
-export class Executable extends Command {
 
-    constructor() { super() }
+class Executed extends Command {
 
-    exec() {
+    constructor(spawned) {
+        super();
+        this._stdout = spawned.stdout;
+        this._stderr = spawned.stderr;
+        this._status = spawned.status;
+        this._stdin = this._stdout.toString(); // PIPE
+        delete this.stdin; // DON'T ALLOW PIPE REWRITE
+        delete this.exec; // exec() ONLY EXISTS AFTER cmd() IS CALLED
+    }
 
+    get status() {
+        return this._status;
+    }
+
+    get stdout() {
+        return this._stdout.toString();
+    }
+
+    get rawstdout() {
+        return this._stdout;
     }
     
-}
+    get stderr() {
+        return this._stderr.toString();
+    }
 
-
-export class Executed extends Executable {
-
-    constructor() { super() }
-
-    exitCode
-
-    stdout
-    
-    stderr
-    
-    cmd() {
-    
+    get rawstderr() {
+        return this._stderr;
     }
 
     get pipe() {
-
+        return this; // This is just a syntax aid
     }
 
-    get tmppipe() {
-
-    }
 }
+
+module.exports = { Command, Executed };

@@ -1,5 +1,5 @@
 
-import { Command } from './command';
+const { Command } = require('./command');
 
 function cmd(...args) {
     let c = new Command();
@@ -8,23 +8,9 @@ function cmd(...args) {
 }
 
 function stdin(input) {
-    
+    let c = new Command();
+    c.stdin(input);
+    return c;
 }
 
-function tmpin(input) {
-
-}
-
-export default openssl = {cmd, stdin, tmpin};
-
-// USAGE:
-/*
-openssl.cmd("ec", "-noout").exec().stdout
-openssl.stdin("my text").cmd("ec", "-noout").exec().stdout
-// piping (both accepted)
-openssl.cmd("ec", "-noout").exec().cmd("ec", "-noout").stdout
-openssl.cmd("ec", "-noout").exec().pipe.cmd("ec", "-noout").stdout
-// tmp files
-openssl.tmpin("my text").cmd("ec", "-noout").exec().stdout
-openssl.cmd("ec", "-noout").exec().tmppipe.cmd("ec", "-noout").stdout
-*/
+module.exports = {cmd, stdin};
