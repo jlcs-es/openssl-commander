@@ -1,6 +1,5 @@
-/// <reference types="typescript" />
 
-export declare function cmd(...params: string): Command;
+export declare function cmd(params: string | string[]): Command;
 
 export declare function stdin(input: string): Command;
 
@@ -9,7 +8,7 @@ declare class Command {
         
     }
 
-    cmd(...params: string): Command;
+    cmd(params: string | string[]): Command;
     exec(): Executed;
     stdin(input: string): Command;
 
