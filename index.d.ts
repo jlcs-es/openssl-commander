@@ -1,21 +1,18 @@
-
-export declare function cmd(params: string | string[]): Command;
+export declare function cmd(...params: string[]): Command;
 
 export declare function stdin(input: string): Command;
 
 declare class Command {
-    constructor() {
-        
-    }
+    constructor();
 
-    cmd(params: string | string[]): Command;
+    cmd(...params: string[]): Command;
     exec(): Executed;
     stdin(input: string): Command;
 
 }
 
 declare class Executed extends Command {
-    constructor() {};
+    constructor();
 
     status: number;
     stdout: string;

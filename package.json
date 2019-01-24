@@ -1,6 +1,6 @@
 {
   "name": "openssl-commander",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "OpenSSL wrapper to run any command that OpenSSL admits.",
   "main": "index.js",
   "scripts": {
