@@ -6,7 +6,7 @@ declare class Command {
     constructor();
 
     cmd(...params: string[]): Command;
-    exec(): Executed;
+    exec(throwOnOpenSSLError?: boolean): Executed;
     stdin(input: string): Command;
 
 }

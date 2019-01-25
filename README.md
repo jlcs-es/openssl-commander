@@ -10,6 +10,9 @@ $ npm install openssl-commander
 
 You also must have OpenSSL installed in your system.
 
+## TypeScript
+
+This module includes types definitions for your amusement.
 
 ## Intended usage
 
@@ -18,7 +21,7 @@ This wrapper is intended to mimic an OpenSSL command in the terminal.
 Import as
 
 ```javascript
-var openssl = require('openssl-commander');
+const openssl = require('openssl-commander');
 ```
 
 Then write the OpenSSL command as:
@@ -49,7 +52,30 @@ openssl.cmd("mycommand").exec().pipe.cmd("mycommand2").exec().stdout
 openssl.cmd("mycommand").exec().cmd("mycommand2").exec().stdout
 ```
 
-## TypeScript
+You can pass a boolean to `exec()` to throw on unexpected OpenSSL errors.
 
-This module includes types definitions for your amusement.
+```javascript
+let myCert = "....";
+openssl.stdin(myCert).cmd("x509", "-noout", "-text").exec(true)
+```
+
+---
+
+The error detection for the `throwOnOpenSSLError` option of `exec()` is based on `mgcrea/node-openssl-wrapper`'s regex expresions to detect correct executions on some OpenSSL commands and subcommnads.
+
+If you find any new regex, please, fill an issue or pull request.
+
+```javascript
+// Credits to mgcrea/node-openssl-wrapper for these regex:
+const expectedStderrForAction = {
+    'cms': { "verify": /^verification successful/i },
+    'genrsa': /^generating/i,
+    'pkcs12': /^mac verified ok/i,
+    'req': { "new": /^generating/i },
+    'req': { "verify": /^verify ok/i },
+    'rsa': /^writing rsa key/i,
+    'smime': { "verify": /^verification successful/i },
+    'x509': { "req": /^signature ok/i }
+};
+```
 
