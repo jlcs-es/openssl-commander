@@ -36,7 +36,7 @@ You can include standard input before or after the command, always before `exec(
 let myCert = "....";
 
 openssl.stdin(myCert).cmd("x509", "-noout", "-text").exec().stdout
-openssl.cmd("x509 -noout -text").stdin("my text").exec().stdout
+openssl.cmd("x509 -noout -text").stdin(myCert).exec().stdout
 ```
 You may have noticed that the command can be an array of parameters or a single string with the rest of the command.
 
