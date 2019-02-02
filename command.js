@@ -12,13 +12,21 @@ const expectedStderrForAction = {
     'x509': { "req": /^signature ok/i }
 };
 
+
+class OpenSSLError extends Error {
+    constructor(args){
+        super(args);
+        this.name = this.code = "OpenSSLError";
+    }
+}
+
 function checkOpenSSLError(args, result) {
-    const expectedStderr = expectedStderrForAction[args[0]];
+    let expectedStderr = expectedStderrForAction[args[0]];
     if (expectedStderr && !(expectedStderr instanceof RegExp)) {
         expectedStderr = expectedStderr[args[1]];
     }
     if (result.status || (result.stderr && expectedStderr && !result.stderr.toString().match(expectedStderr))) {
-        throw new Error(result.stderr.toString());
+        throw new OpenSSLError(result.stderr.toString());
     }
 }
 
@@ -62,9 +70,11 @@ class Executed extends Command {
 
     constructor(spawned) {
         super();
-        this._stdout = spawned.stdout;
-        this._stderr = spawned.stderr;
+        this._rawstdout = spawned.stdout;
+        this._rawstderr = spawned.stderr;
         this._status = spawned.status;
+        this._stdout = spawned.stdout.toString();
+        this._stderr = spawned.stderr.toString();
         this._stdin = this._stdout.toString(); // PIPE
         delete this.stdin; // DON'T ALLOW PIPE REWRITE
         delete this.exec; // exec() ONLY EXISTS AFTER cmd() IS CALLED
@@ -75,19 +85,19 @@ class Executed extends Command {
     }
 
     get stdout() {
-        return this._stdout.toString();
-    }
-
-    get rawstdout() {
         return this._stdout;
     }
 
+    get rawstdout() {
+        return this._rawstdout;
+    }
+
     get stderr() {
-        return this._stderr.toString();
+        return this._stderr;
     }
 
     get rawstderr() {
-        return this._stderr;
+        return this._rawstderr;
     }
 
     get pipe() {

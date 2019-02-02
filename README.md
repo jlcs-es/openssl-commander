@@ -59,6 +59,8 @@ let myCert = "....";
 openssl.stdin(myCert).cmd("x509", "-noout", "-text").exec(true)
 ```
 
+> Note: `exec()` will always throw if Node fails to spawn the OpenSSL process.
+
 ---
 
 The error detection for the `throwOnOpenSSLError` option of `exec()` is based on `mgcrea/node-openssl-wrapper`'s regex expresions to detect correct executions on some OpenSSL commands and subcommnads.
