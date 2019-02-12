@@ -78,6 +78,10 @@ describe("x509 parsing", () => {
         let req = openssl.stdin(testCertificateRequest).cmd("req -text -noout").exec().stdout;
         expect(req).to.equal(expectedReqParse);
     });
+    it('should parse the x509 certificate with extra spaces in the command', () => {
+        let cert = openssl.stdin(testCertificate).cmd(" x509  -text  -noout ").exec(true).stdout;
+        expect(cert).to.equal(expectedParse);
+    });
 });
 
 describe("Throwing errors", () => {

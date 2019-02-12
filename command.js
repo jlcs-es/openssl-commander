@@ -40,7 +40,7 @@ class Command {
     cmd(...params) {
         this._command = "openssl";
         if (params.length == 1)
-            this._args = params[0].split(" ");
+            this._args = params[0].replace(/^\s+/g, '').replace(/\s+$/g, '').split(/\s+/);
         else
             this._args = params;
 
