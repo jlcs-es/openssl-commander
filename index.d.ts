@@ -2,6 +2,8 @@ export declare function cmd(...params: string[]): Command;
 
 export declare function stdin(input: string): Command;
 
+export declare function setOpennSSLCommand(command: string): void;
+
 declare class Command {
     constructor();
 

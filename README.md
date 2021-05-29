@@ -29,19 +29,27 @@ Then write the OpenSSL command as:
 ```javascript
 openssl.cmd("version").exec().stdout
 /*
-    OpenSSL 1.1.0g  2 Nov 2017
+    OpenSSL 1.1.1f  31 Mar 2020
 */
 ```
 
 You can include standard input before or after the command, always before `exec()`:
 
 ```javascript
-let myCert = "....";
+const myCert = fs.readFileSync('myCert.pem')
 
 openssl.stdin(myCert).cmd("x509", "-noout", "-text").exec().stdout
 openssl.cmd("x509 -noout -text").stdin(myCert).exec().stdout
 ```
 You may have noticed that the command can be an array of parameters or a single string with the rest of the command.
+
+These are the same as running:
+
+```shell
+$ openssl x509 -noout -text < myCert.pem
+          _________________   __________
+               .cmd()          .stdin()
+```
 
 
 Also, you can pipe the output of one command to another OpenSSL command:
@@ -60,6 +68,12 @@ openssl.stdin(myCert).cmd("x509", "-noout", "-text").exec(true)
 ```
 
 > Note: `exec()` will always throw if Node fails to spawn the OpenSSL process.
+
+You can configure the OpenSSL command with:
+
+```javascript
+openssl.setOpennSSLCommand(`/usr/bin/openssl`)
+```
 
 ---
 

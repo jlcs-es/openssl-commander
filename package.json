@@ -1,6 +1,6 @@
 {
   "name": "openssl-commander",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "OpenSSL wrapper to run any command that OpenSSL admits.",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,6 @@
     "url": "https://github.com/jlcs-es/openssl-commander/issues"
   },
   "homepage": "https://github.com/jlcs-es/openssl-commander#readme",
-  "dependencies": {},
   "devDependencies": {
     "chai": "*",
     "mocha": "*"

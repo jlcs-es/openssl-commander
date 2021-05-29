@@ -33,12 +33,12 @@ function checkOpenSSLError(args, result) {
 
 class Command {
 
-    constructor() {
+    constructor(opensslBin) {
         this._stdin = "";
+        this._command = opensslBin || "openssl";
     }
 
     cmd(...params) {
-        this._command = "openssl";
         if (params.length == 1)
             this._args = params[0].replace(/^\s+/g, '').replace(/\s+$/g, '').split(/\s+/);
         else
